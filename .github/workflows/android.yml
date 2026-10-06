@@ -1,0 +1,35 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Télécharger le projet
+        uses: actions/checkout@v4
+
+      - name: Installer .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Installer MAUI Android
+        run: dotnet workload install maui-android
+
+      - name: Restaurer les dépendances
+        run: dotnet restore MoulesMachines.csproj
+
+      - name: Construire APK
+        run: dotnet build MoulesMachines.csproj -c Debug -f net8.0-android
+
+      - name: Publier APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MoulesMachines-APK
+          path: '**/bin/Debug/net8.0-android/*.apk'
