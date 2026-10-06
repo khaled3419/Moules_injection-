@@ -1,3 +1,4 @@
+
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
@@ -10,7 +11,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
 
         builder
-            .UseMauiApp<MoulesApp>();
+            .UseMauiApp<App>();
 
         return builder.Build();
     }
